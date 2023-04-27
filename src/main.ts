@@ -18,8 +18,7 @@ async function main() {
     .on("scan", async (qrcode, status) => {
       const url = `https://wechaty.js.org/qrcode/${encodeURIComponent(qrcode)}`;
       Logger.log(`💡 Scan QR Code to login: ${status}\n${url}`);
-      Logger.log(
-        await QRCode.toString(qrcode, { type: "terminal", small: true })
+      Logger.log("\n" + await QRCode.toString(qrcode, { type: "terminal", small: true })
       );
     })
     // login to WeChat desktop account
