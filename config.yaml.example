@@ -1,0 +1,4 @@
+chatbotProxy: "http://13.213.43.103:8080"
+autoAcceptFriendShip: "true"
+autoAcceptRoomInvite: "true"
+chatbotTriggerKeyword: ""
