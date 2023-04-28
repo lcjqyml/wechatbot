@@ -223,7 +223,8 @@ export class ChatBot {
     const voiceType = this.getFirstMatchTextFromRegex(voice, Constants.voiceTypeReg);
     if (voiceType === "mpeg") {
       Logger.log(`Reply voice.mp3 -> ${voice.substr(0, 50)}`);
-      await talker.say(FileBox.fromDataURL(voice, "voice.mp3"));
+      const tmpName = await this.generateTmpName(talker) + ".mp3";
+      await talker.say(FileBox.fromDataURL(voice, tmpName));
     }
   }
 
@@ -234,7 +235,8 @@ export class ChatBot {
     const imageType = this.getFirstMatchTextFromRegex(image, Constants.imageTypeReg);
     if (imageType) {
       Logger.log(`Reply image.${imageType} -> ${image.substr(0, 50)}`);
-      await talker.say(FileBox.fromDataURL(image, `image.${imageType}`));
+      const tmpName = await this.generateTmpName(talker) + `.${imageType}`;
+      await talker.say(FileBox.fromDataURL(image, tmpName));
     }
   }
 
@@ -309,5 +311,21 @@ export class ChatBot {
       // @ts-ignore
       return await this.onGroupMessage(talker, room, text);
     }
+  }
+
+  private async generateTmpName(talker: RoomInterface | ContactInterface) {
+    let tmpName = "";
+    if ("topic" in talker) {
+      tmpName = await talker.topic();
+    } else {
+      tmpName = talker.name();
+    }
+    tmpName = pinyin(tmpName, {style: pinyin.STYLE_FIRST_LETTER}).join("");
+    const now = new Date();
+    const hour = now.getHours().toString().padStart(2, "0");
+    const minute = now.getMinutes().toString().padStart(2, "0");
+    const second = now.getSeconds().toString().padStart(2, "0");
+    tmpName += `-${hour}${minute}${second}`;
+    return tmpName;
   }
 }
