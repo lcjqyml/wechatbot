@@ -27,6 +27,7 @@ else {
     autoAcceptFriendShip: process.env.AUTO_ACCEPT_FRIEND_SHIP,
     autoAcceptRoomInvite: process.env.AUTO_ACCEPT_ROOM_INVITE,
     chatbotTriggerKeyword: process.env.CHATBOT_TRIGGER_KEYWORD,
+    responseQuote: process.env.RESPONSE_QUOTE,
   };
 }
 
@@ -39,10 +40,16 @@ if (configFile.chatbotProxy === undefined) {
 
 export const Config: IConfig = {
   chatbotProxy: configFile.chatbotProxy || "",
-  autoAcceptFriendShip: Boolean(configFile.autoAcceptFriendShip),
-  autoAcceptRoomInvite: Boolean(configFile.autoAcceptRoomInvite),
+  autoAcceptFriendShip: configFile.autoAcceptFriendShip == "true",
+  autoAcceptRoomInvite: configFile.autoAcceptRoomInvite == "true",
   chatbotTriggerKeyword: configFile.chatbotTriggerKeyword || "",
+  responseQuote: configFile.responseQuote == "true"
 };
+
+Logger.log("Config ->")
+Object.entries(Config).forEach(([key, value]) => {
+  Logger.log(`${key}: ${value}`);
+});
 
 export const Constants = {
   imageTypeReg: /data:image\/(\w+);base64,/g,

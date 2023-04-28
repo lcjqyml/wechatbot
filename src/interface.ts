@@ -1,6 +1,7 @@
 export interface IConfig {
-  chatbotProxy: string;
+  chatbotProxy: string,
   autoAcceptFriendShip: boolean,
   autoAcceptRoomInvite: boolean,
-  chatbotTriggerKeyword: string;
+  chatbotTriggerKeyword: string,
+  responseQuote: boolean,
 }

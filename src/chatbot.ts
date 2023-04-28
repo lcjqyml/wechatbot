@@ -243,7 +243,7 @@ export class ChatBot {
   private async reply(talker: ContactInterface|RoomInterface, prompt: string, responseData: ResponseData) {
     if (responseData.message && responseData.message.length > 0) {
       for (let m of responseData.message) {
-        if ("topic" in talker) {
+        if (Config.responseQuote && "topic" in talker) {
           m = `${prompt}\n----------\n${m}`;
         }
         await this.replyText(talker, m);
