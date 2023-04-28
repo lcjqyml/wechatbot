@@ -23,6 +23,7 @@
 | autoAcceptFriendShip   | AUTO_ACCEPT_FRIEND_SHIP   | 自动通过好友请求 | NO   | false   | 
 | autoAcceptRoomInvite | AUTO_ACCEPT_ROOM_INVITE   | 自动通过群聊邀请   | NO   | false | 
 | chatbotTriggerKeyword  | CHATBOT_TRIGGER_KEYWORD   | 机器人聊天触发器，默认@触发   | NO   | "" | 
+| responseQuote  | RESPONSE_QUOTE   | 群聊中回复时是否引用触发的消息   | NO   | yes | 
 
 ## 运行说明
 
@@ -30,7 +31,10 @@
 ```bash
 docker run -e CHATBOT_PROXY="<your-proxy>" lcjqyml/wechatbot:latest
 ```
-* `<your-proxy>` 需要替换为搭建的http服务，参考：http://127.0.0.1:8080
+* `<your-proxy>` 需要替换为你自己搭建的http服务，例如：
+```bash
+docker run -e CHATBOT_PROXY="http://127.0.0.1:8080" lcjqyml/wechatbot:latest
+```
 
 扫码登陆即可。
 PS：
