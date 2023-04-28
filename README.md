@@ -30,7 +30,10 @@
 ```bash
 docker run -e CHATBOT_PROXY="<your-proxy>" lcjqyml/wechatbot:latest
 ```
-* `<your-proxy>` 需要替换为搭建的http服务，参考：http://127.0.0.1:8080
+* `<your-proxy>` 需要替换为你自己搭建的http服务，例如：
+```bash
+docker run -e CHATBOT_PROXY="http://127.0.0.1:8080" lcjqyml/wechatbot:latest
+```
 
 扫码登陆即可。
 PS：
