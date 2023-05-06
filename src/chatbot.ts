@@ -3,6 +3,7 @@ import {Message, Wechaty} from "wechaty";
 import {ContactInterface, RoomInterface} from "wechaty/impls";
 import {FileBox} from 'file-box';
 import pinyin from "pinyin";
+import PUPPET from 'wechaty-puppet'
 
 import axios from 'axios';
 
@@ -201,18 +202,28 @@ export class ChatBot {
 
   private async replyText(
       talker: RoomInterface | ContactInterface,
-      mesasge: string
+      text: string,
+      message: Message
   ): Promise<void> {
-    const messages: Array<string> = [];
-    Logger.log(`Reply text -> ${mesasge.substr(0, 50)}`);
-    let message = mesasge;
-    while (message.length > this.SINGLE_MESSAGE_MAX_SIZE) {
-      messages.push(message.slice(0, this.SINGLE_MESSAGE_MAX_SIZE));
-      message = message.slice(this.SINGLE_MESSAGE_MAX_SIZE);
+    const texts: Array<string> = [];
+    Logger.log(`Reply text -> ${text.substr(0, 50)}`);
+    let _text = text;
+    while (_text.length > this.SINGLE_MESSAGE_MAX_SIZE) {
+      texts.push(_text.slice(0, this.SINGLE_MESSAGE_MAX_SIZE));
+      _text = _text.slice(this.SINGLE_MESSAGE_MAX_SIZE);
     }
-    messages.push(message);
-    for (const msg of messages) {
-      await talker.say(msg);
+    texts.push(_text);
+    for (let txt of texts) {
+      if (Config.responseQuote) {
+        const messagePost = await message.toPost();
+        const post = this.weChatBot.Post.builder();
+        post.add(txt);
+        post.reply(messagePost);
+        post.type(PUPPET.types.Post.Message);
+        await message.say(await post.build())
+      } else {
+        await talker.say(txt);
+      }
     }
   }
 
@@ -240,13 +251,10 @@ export class ChatBot {
     }
   }
 
-  private async reply(talker: ContactInterface|RoomInterface, prompt: string, responseData: ResponseData) {
+  private async reply(talker: ContactInterface|RoomInterface, prompt: string, responseData: ResponseData, message: Message) {
     if (responseData.message && responseData.message.length > 0) {
       for (let m of responseData.message) {
-        if (Config.responseQuote && "topic" in talker) {
-          m = `${prompt}\n----------\n${m}`;
-        }
-        await this.replyText(talker, m);
+        await this.replyText(talker, m, message);
       }
     }
     if (responseData.voice && responseData.voice.length > 0) {
@@ -262,24 +270,24 @@ export class ChatBot {
   }
 
   // reply to private message
-  private async onPrivateMessage(talker: ContactInterface, text: string) {
+  private async onPrivateMessage(talker: ContactInterface, text: string, message: Message) {
     const sessionId = pinyin(talker.name(), {style: pinyin.STYLE_TONE2}).join("");
     const chatbot = this;
     await this.onChat(text, `friend-${sessionId}`, sessionId,
         async function (responseData: ResponseData) {
-      await chatbot.reply(talker, text, responseData);
+      await chatbot.reply(talker, text, responseData, message);
     });
   }
 
   // reply to group message
-  private async onGroupMessage(talker: ContactInterface, room: RoomInterface, text: string) {
+  private async onGroupMessage(talker: ContactInterface, room: RoomInterface, text: string, message: Message) {
     const sessionId = pinyin(await room.topic(), {style: pinyin.STYLE_TONE2}).join("");
     const username = pinyin(talker.name(), {style: pinyin.STYLE_TONE2}).join("");
     const chatbot = this;
     // get reply from chat bot
     await this.onChat(text, `group-${sessionId}`, username,
         async function (responseData: ResponseData) {
-          await chatbot.reply(room, text, responseData);
+          await chatbot.reply(room, text, responseData, message);
         });
   }
 
@@ -306,10 +314,10 @@ export class ChatBot {
     }
     const text = this.cleanMessage(rawText, isPrivateChat);
     if (isPrivateChat) {
-      return await this.onPrivateMessage(talker, text);
+      return await this.onPrivateMessage(talker, text, message);
     } else {
       // @ts-ignore
-      return await this.onGroupMessage(talker, room, text);
+      return await this.onGroupMessage(talker, room, text, message);
     }
   }
 
