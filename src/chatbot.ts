@@ -3,7 +3,7 @@ import {Message, Wechaty} from "wechaty";
 import {ContactInterface, RoomInterface} from "wechaty/impls";
 import {FileBox} from 'file-box';
 import pinyin from "pinyin";
-import PUPPET from 'wechaty-puppet'
+import * as PUPPET from 'wechaty-puppet'
 
 import axios from 'axios';
 
