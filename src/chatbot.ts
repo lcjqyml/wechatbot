@@ -65,6 +65,8 @@ export class ChatBot {
 
   weChatBot: Wechaty;
 
+  errorResponse = "机器人异常，请稍后再试或联系管理员！";
+
   constructor(weChatBot: Wechaty) {
     this.weChatBot = weChatBot;
   }
@@ -171,8 +173,8 @@ export class ChatBot {
           }
           replyCallback(responseData);
         }).catch((error) => {
+          replyCallback(this.constructResponseData(Constants.responseStatus.failed, this.errorResponse));
           Logger.error(error);
-          replyCallback(this.constructResponseData(Constants.responseStatus.failed, error.message));
         });
   }
 
@@ -194,7 +196,7 @@ export class ChatBot {
                 await chatbot.askResponse(requestId, replyCallback, intervalId)
               }, 2000);
         }).catch((error) => {
-          replyCallback(this.constructResponseData(Constants.responseStatus.failed, error.message));
+          replyCallback(this.constructResponseData(Constants.responseStatus.failed, this.errorResponse));
           Logger.error(error);
         });
   }
