@@ -83,6 +83,8 @@
 </details>
 
 ## 运行说明
+  
+### 服务器部署
 
 快速启动：
 ```bash
@@ -111,6 +113,10 @@ _PS: 以上chatgpt-qq-chatgpt-1, chatgpt-qq_default由docker-compose启动lss233
 * 尽量避免国外登陆或者异地登陆，防止封号。
 * 若二维码不清晰，可将二维码上方的链接copy至浏览器打开扫码。
 
+### Railway或者Zeabur托管部署
+  
+参考`issue` https://github.com/lcjqyml/wechatbot/issues/20
+  
 ## 关联项目
 * [lss233/chatgpt-mirai-qq-bot][1] - （本项目需要配合此项目的http service使用）多平台、多AI引擎的AIGC整合项目。
 * [kx-Huang/ChatGPT-on-WeChat](https://github.com/kx-Huang/ChatGPT-on-WeChat) - 访问ChatGPT的微信聊天机器人
