@@ -26,7 +26,8 @@ else {
     chatbotProxy: process.env.CHATBOT_PROXY,
     autoAcceptFriendShip: process.env.AUTO_ACCEPT_FRIEND_SHIP,
     autoAcceptRoomInvite: process.env.AUTO_ACCEPT_ROOM_INVITE,
-    chatbotTriggerKeyword: process.env.CHATBOT_TRIGGER_KEYWORD,
+    privateChatTrigger: process.env.PRIVATE_CHAT_TRIGGER,
+    groupChatTrigger: process.env.GROUP_CHAT_TRIGGER,
     responseQuote: process.env.RESPONSE_QUOTE,
   };
 }
@@ -42,7 +43,8 @@ export const Config: IConfig = {
   chatbotProxy: configFile.chatbotProxy || "",
   autoAcceptFriendShip: configFile.autoAcceptFriendShip == "true",
   autoAcceptRoomInvite: configFile.autoAcceptRoomInvite == "true",
-  chatbotTriggerKeyword: configFile.chatbotTriggerKeyword || "",
+  privateChatTrigger: configFile.privateChatTrigger || "",
+  groupChatTrigger:  configFile.groupChatTrigger || "",
   responseQuote: configFile.responseQuote == "true"
 };
 

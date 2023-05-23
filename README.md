@@ -19,11 +19,12 @@
 
 | config.yaml | env | 说明 | 必须 | 默认 |
 |----------|------|------|------|------|
-| chatbotProxy    | CHATBOT_PROXY   | chatbot请求地址，参考[lss233/chatgpt-mirai-qq-bot][1]   | YES   |   |
-| autoAcceptFriendShip   | AUTO_ACCEPT_FRIEND_SHIP   | 自动通过好友请求 | NO   | false   | 
-| autoAcceptRoomInvite | AUTO_ACCEPT_ROOM_INVITE   | 自动通过群聊邀请   | NO   | false | 
-| chatbotTriggerKeyword  | CHATBOT_TRIGGER_KEYWORD   | 机器人聊天触发器，默认@触发   | NO   | "" | 
-| responseQuote  | RESPONSE_QUOTE   | 群聊中回复时是否引用触发的消息   | NO   | false | 
+| chatbotProxy | CHATBOT_PROXY | chatbot请求地址，参考[lss233/chatgpt-mirai-qq-bot][1] | YES | |
+| autoAcceptFriendShip | AUTO_ACCEPT_FRIEND_SHIP | 自动通过好友请求 | NO | false | 
+| autoAcceptRoomInvite | AUTO_ACCEPT_ROOM_INVITE | 自动通过群聊邀请 | NO | false | 
+| privateChatTrigger | PRIVATE_CHAT_TRIGGER | 机器人私聊触发器，空则都触发 | NO | "" | 
+| groupChatTrigger | GROUP_CHAT_TRIGGER | 机器人群聊触发器，空则@触发，否则：trigger 或 @bot trigger 触发 | NO | "" | 
+| responseQuote | RESPONSE_QUOTE | 群聊中回复时是否引用触发的消息 | NO | false | 
 
 ### lss233/chatgpt-mirai-qq-bot 项目配置说明
 本项目与lss233项目部署在同一服务器时：

@@ -51,14 +51,18 @@ const postData = async (url: string, requestBody: RequestBody): Promise<string> 
 
 export class ChatBot {
   // chatbot name (WeChat account name)
-  botName: string = "";
+  botName: string = "bot";
 
   // self-chat may cause some issue for some WeChat Account
   // please set to true if self-chat cause some errors
   disableSelfChat: boolean = false;
 
   // chatbot trigger keyword
-  chatbotTriggerKeyword: string = Config.chatbotTriggerKeyword;
+  privateChatTrigger: string = Config.privateChatTrigger;
+  groupChatTrigger: string = Config.groupChatTrigger;
+  groupChatTriggerRegex: RegExp = this.groupChatTrigger ?
+      new RegExp(`^(@${this.botName}\\s+)?${this.groupChatTrigger}`):
+      new RegExp(`^@${this.botName}`);
 
   // message size for a single reply by the bot
   SINGLE_MESSAGE_MAX_SIZE: number = 500;
@@ -74,6 +78,9 @@ export class ChatBot {
   // set bot name during login stage
   setBotName(botName: string) {
     this.botName = botName;
+    this.groupChatTriggerRegex = this.groupChatTrigger ?
+        new RegExp(`^(@${this.botName}\\s+)?${this.groupChatTrigger}`):
+        new RegExp(`^@${this.botName}`);
   }
 
   private constructResponseData(result: string, message: string): ResponseData {
@@ -85,27 +92,19 @@ export class ChatBot {
     }
   }
 
-  // get trigger keyword in group chat: (@Name <keyword>)
-  // in group chat, replace the special character after "@username" to space
-  // to prevent cross-platfrom mention issue
-  private get chatGroupTriggerKeyword(): string {
-    return `@${this.botName} ${this.chatbotTriggerKeyword || ""}`;
-  }
-
-  private cleanMessage(
-    rawText: string,
-    isPrivateChat: boolean = false
-  ): string {
+  private cleanMessage(rawText: string, isPrivateChat: boolean): string {
     let text = rawText;
-    const item = rawText.split("- - - - - - - - - - - - - - -");
+    const item = rawText.split("----------");
     if (item.length > 1) {
-      text = item[item.length - 1];
+      text = item[item.length - 1].trim();
     }
-    return text.slice(
-      isPrivateChat
-        ? this.chatbotTriggerKeyword.length
-        : this.chatGroupTriggerKeyword.length
-    );
+    if (isPrivateChat && this.privateChatTrigger){
+      return text.slice(this.privateChatTrigger.length).trim();
+    }
+    if (!isPrivateChat) {
+      return text.replace(this.groupChatTriggerRegex, "").trim();
+    }
+    return text.trim();
   }
 
   // check whether chat bot can be triggered
@@ -113,20 +112,13 @@ export class ChatBot {
     text: string,
     isPrivateChat: boolean = false
   ): boolean {
-    const chatbotTriggerKeyword = this.chatbotTriggerKeyword;
-    let triggered = false;
+    let triggered;
     if (isPrivateChat) {
-      triggered = chatbotTriggerKeyword
-        ? text.startsWith(chatbotTriggerKeyword)
+      triggered = this.privateChatTrigger
+        ? text.startsWith(this.privateChatTrigger)
         : true;
     } else {
-      const textMention = `@${this.botName}`;
-      const startsWithMention = text.startsWith(textMention);
-      const textWithoutMention = text.slice(textMention.length + 1);
-      const followByTriggerKeyword = textWithoutMention.startsWith(
-        this.chatbotTriggerKeyword
-      );
-      triggered = startsWithMention && followByTriggerKeyword;
+      triggered = this.groupChatTriggerRegex.test(text);
     }
     if (triggered) {
       Logger.log(`🎯 ChatGPT triggered: ${text}`);
