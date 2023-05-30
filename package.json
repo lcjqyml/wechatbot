@@ -8,7 +8,7 @@
     "dev": "nodemon --exec node --watch config.yaml --loader ts-node/esm src/main.ts",
     "build": "tsc"
   },
-  "author": "Michael Huang",
+  "author": "Milin",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",

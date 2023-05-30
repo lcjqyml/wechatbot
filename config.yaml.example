@@ -1,5 +1,6 @@
-chatbotProxy: "http://13.213.43.103:8080"
+chatbotProxy: "http://your-server-ip:port"
 autoAcceptFriendShip: "true"
 autoAcceptRoomInvite: "true"
-chatbotTriggerKeyword: ""
+privateChatTrigger: ""
+groupChatTrigger: ""
 responseQuote: "true"
