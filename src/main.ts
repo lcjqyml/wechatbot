@@ -16,9 +16,12 @@ async function main() {
   weChatBot
     // scan QR code for login
     .on("scan", async (qrcode, status) => {
-      const url = `https://wechaty.js.org/qrcode/${encodeURIComponent(qrcode)}`;
-      Logger.log(`💡 Scan QR Code to login: ${status}\n${url}`);
-      Logger.log("\n" + await QRCode.toString(qrcode, { type: "terminal", small: true })
+      const uri = encodeURIComponent(qrcode);
+      const wechatyurl = `https://wechaty.js.org/qrcode/${uri}`;
+      const sohuurl = `https://my.tv.sohu.com/user/a/wvideo/getQRCode.do?text=${uri}`;
+      const qrserverurl = `https://api.qrserver.com/v1/create-qr-code/?size=150×150&data=${uri}`;
+      Logger.log(`💡 Open any url below and scan QR code to login: \n${wechatyurl}\n${sohuurl}\n${qrserverurl}`);
+      Logger.log("\nOr scan the QR code below to login:\n" + await QRCode.toString(qrcode, { type: "terminal", small: true })
       );
     })
     // login to WeChat desktop account
