@@ -13,6 +13,8 @@
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/lcjqyml/wechatbot?&amp;color=E2CDBC&amp;style=for-the-badge" alt="License"></a>
 </p>
 
+点击加入[qq交流群](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=xzKavu5qVsnb0Of5k0VBnFAKN1Knc46C&authKey=jQxOFByEpqVVA83Wj97kur4c0Ryzaz%2FRhQJyQu4JGR%2BqHF6zShTfxrf5OzUnLlgA&noverify=0&group_code=468682056)
+
 ## 配置说明
 
 可以通过`config.yaml`或者环境变量进行配置：
