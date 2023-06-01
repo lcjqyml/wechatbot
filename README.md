@@ -92,6 +92,8 @@
 快速启动：
 ```bash
 docker run -e CHATBOT_PROXY="<your-proxy>" lcjqyml/wechatbot:latest
+# PS: linux服务器可执行此命令直接安装docker:
+# sh <(curl -sL https://get.docker.com)
 ```
 * `<your-proxy>` 需要替换为你自己搭建的http服务，例如：
     ```bash
