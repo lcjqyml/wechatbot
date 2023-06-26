@@ -106,6 +106,12 @@ docker run -v /<path-to-config>/config.yaml:/app/config.yaml lcjqyml/wechatbot:l
 ```
 * 配置文件参考`config.yaml.example`
 
+保存登陆记录，增加以下配置：
+```bash
+touch ~/memory-card.json
+docker run -v ~/memory-card.json:/app/my-wechat-bot.memory-card.json ... lcjqyml/wechatbot:latest
+```
+
 本项目与lss233项目部署在同一服务器时，执行以下命令：
 
 ```bash
