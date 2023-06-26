@@ -111,6 +111,7 @@ docker run -v /<path-to-config>/config.yaml:/app/config.yaml lcjqyml/wechatbot:l
 touch ./memory-card.json
 docker run -v ./memory-card.json:/app/my-wechat-bot.memory-card.json ... lcjqyml/wechatbot:latest
 ```
+遇到问题参考[ #30](https://github.com/lcjqyml/wechatbot/issues/30)
 
 本项目与lss233项目部署在同一服务器时，执行以下命令：
 
