@@ -116,9 +116,9 @@ docker run -v ./memory-card.json:/app/my-wechat-bot.memory-card.json ... lcjqyml
 本项目与lss233项目部署在同一服务器时，执行以下命令：
 
 ```bash
-docker run -e CHATBOT_PROXY="http://chatgpt-qq-chatgpt-1:8080" --network chatgpt-qq_default lcjqyml/wechatbot:latest
+docker run -e CHATBOT_PROXY="http://chatgpt-qq_chatgpt_1:8080" --network chatgpt-qq_default lcjqyml/wechatbot:latest
 ```
-_PS: 以上chatgpt-qq-chatgpt-1, chatgpt-qq_default由docker-compose启动lss233项目时默认创建。_
+_PS: 以上chatgpt-qq_chatgpt_1, chatgpt-qq_default由docker-compose启动lss233项目时默认创建。_
 
 启动后扫码登陆即可：
 * 扫码的微信号需要进过实名认证，否则会异常。
