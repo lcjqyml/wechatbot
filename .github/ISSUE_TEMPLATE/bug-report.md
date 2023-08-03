@@ -10,7 +10,7 @@ assignees: ''
 **提交 issue 前，请先确认：**
 - [x] 我已看过 **FAQ**，此问题不在列表中
 - [ ] 我已看过其他 issue，他们不能解决我的问题 
-- [ ] 我认为这不是 Mirai 或者 OpenAI 的 BUG
+- [ ] 我认为这不是 lss233/chatgpt-mirai-qq-bot 库的 BUG
 
 **表现**  
 描述 BUG 的表现情况
