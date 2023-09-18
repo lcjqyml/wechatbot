@@ -83,7 +83,7 @@ export class ChatBot {
         new RegExp(`^@${this.botName}`);
   }
 
-  private constructResponseData(result: string, message: string): ResponseData {
+  private static constructResponseData(result: string, message: string): ResponseData {
     return {
       result: result,
       message: [message],
@@ -165,7 +165,7 @@ export class ChatBot {
           }
           replyCallback(responseData);
         }).catch((error) => {
-          replyCallback(this.constructResponseData(Constants.responseStatus.failed, this.errorResponse));
+          replyCallback(ChatBot.constructResponseData(Constants.responseStatus.failed, this.errorResponse));
           Logger.error(error);
         });
   }
@@ -182,13 +182,18 @@ export class ChatBot {
     await postData(askUrl, requestBody)
         .then((requestId: string) => {
           Logger.log(`🎯 Got request id: ${requestId}`)
+          let intervalCnt = 0;
           const intervalId = setInterval(
               async function () {
                 // @ts-ignore
                 await chatbot.askResponse(requestId, replyCallback, intervalId)
+                if (++intervalCnt >= 60){
+                  clearInterval(intervalId);
+                  replyCallback(ChatBot.constructResponseData(Constants.responseStatus.failed, "响应超时，请重新尝试！"));
+                }
               }, 2000);
         }).catch((error) => {
-          replyCallback(this.constructResponseData(Constants.responseStatus.failed, this.errorResponse));
+          replyCallback(ChatBot.constructResponseData(Constants.responseStatus.failed, this.errorResponse));
           Logger.error(error);
         });
   }
