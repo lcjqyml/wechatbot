@@ -87,7 +87,7 @@
 
 ## 运行说明
   
-### 服务器部署
+### docker部署
 
 快速启动：
 ```bash
@@ -128,7 +128,83 @@ _PS: 以上chatgpt-qq_chatgpt_1, chatgpt-qq_default由docker-compose启动lss233
 ### Railway或者Zeabur托管部署
   
 参考`issue` https://github.com/lcjqyml/wechatbot/issues/20
-  
+
+### 本地部署(linux x86)
+安装nodejs、npm
+
+下载压缩包：
+```
+curl -O https://nodejs.org/dist/v18.18.2/node-v18.18.2-linux-x64.tar.xz
+```
+解压压缩包：
+```
+tar xf node-v18.18.2-linux-x64.tar.xz
+```
+移动压缩包：
+```
+sudo mv node-v18.18.2-linux-x64 /usr/local/bin/
+```
+设置为全局命令：
+```
+sudo ln -s /usr/local/bin/node-v18.18.2-linux-x64/bin/node /usr/local/bin/node
+sudo ln -s /usr/local/bin/node-v18.18.2-linux-x64/bin/npm /usr/local/bin/npm
+```
+如果现在使用```node -v```和```npm -v```命令可以正常输出版本信息，那么恭喜你，node和npm已经安装完成了，继续进行下面的步骤吧~
+
+现在开始安装nodemon
+
+npm更换国内源：（如服务器在国外可以跳过此步骤）
+```
+npm config set registry https://registry.npmmirror.com  
+```
+安装nodemon：
+```
+npm install -g nodemon
+```
+设置为全局命令：
+```
+sudo ln -s /usr/local/bin/node-v18.18.2-linux-x64/bin/nodemon /usr/bin/nodemon
+```
+拉取项目：
+```
+git clone https://github.com/lcjqyml/wechatbot.git
+```
+进入：
+```
+cd wechatbot
+```
+安装依赖：（如果安装失败，多重试几次）
+```
+npm install
+```
+设置环境变量：（如果使用```config.yml```进行配置，此处可掠过）
+```
+vim .env
+```
+填入环境变量：（如果使用```config.yml```进行配置，此处可掠过）
+```
+CHATBOT_PROXY="http://example.com:1234"
+```
+写一个小小的启动脚本，方便以后启动：
+```
+vim start.sh
+```
+填入内容：（如果使用```config.yml```进行配置，此处的```source ./.env```不需要添加）
+```
+source ./.env
+nodemon
+```
+给予运行权限：
+```
+chmod +x start.sh
+```
+启动：
+```
+./start.sh
+```
+至此，linux本地部署完成，你可以把它放在一个screen窗口里运行，有关screen的用法请自行搜索
+
+
 ## 关联项目
 * [lss233/chatgpt-mirai-qq-bot][1] - （本项目需要配合此项目的http service使用）多平台、多AI引擎的AIGC整合项目。
 * [kx-Huang/ChatGPT-on-WeChat](https://github.com/kx-Huang/ChatGPT-on-WeChat) - 访问ChatGPT的微信聊天机器人
