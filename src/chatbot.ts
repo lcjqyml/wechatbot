@@ -260,10 +260,23 @@ export class ChatBot {
     }
   }
 
+  private triggerActions(talker: ContactInterface, text: string) {
+    if (text !== Config.checkOnlineTrigger) {
+      return false;
+    }
+    setInterval(async () => {
+      await this.onPrivateMessage(talker, Config.checkOnlineCommand);
+    }, Config.checkOnlineInterval);
+    return true;
+  }
+
   // reply to private message
   private async onPrivateMessage(talker: ContactInterface, text: string) {
     const sessionId = pinyin(talker.name(), {style: pinyin.STYLE_TONE2}).join("");
     const chatbot = this;
+    if (this.triggerActions(talker, text)) {
+      text = Config.checkOnlineCommand;
+    }
     await this.onChat(text, `friend-${sessionId}`, sessionId,
         async function (responseData: ResponseData) {
       await chatbot.reply(talker, text, responseData);
@@ -297,6 +310,7 @@ export class ChatBot {
     const room = message.room();
     const messageType = message.type();
     const isPrivateChat = !room;
+    Logger.log(`收到${isPrivateChat ? "" : room.topic()} > ${talker.name()}(${talker.id})的消息`)
     if (
       this.isNonsense(talker, messageType, rawText) ||
       !this.triggerGPTMessage(rawText, isPrivateChat)
@@ -328,3 +342,4 @@ export class ChatBot {
     return tmpName;
   }
 }
+

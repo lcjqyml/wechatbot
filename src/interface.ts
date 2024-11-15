@@ -5,4 +5,7 @@ export interface IConfig {
   privateChatTrigger: string,
   groupChatTrigger: string,
   responseQuote: boolean,
+  checkOnlineTrigger: string,
+  checkOnlineCommand: string,
+  checkOnlineInterval: number,
 }
