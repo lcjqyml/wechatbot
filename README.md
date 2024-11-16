@@ -27,6 +27,9 @@
 | privateChatTrigger | PRIVATE_CHAT_TRIGGER | 机器人私聊触发器，空则都触发 | NO | "" | 
 | groupChatTrigger | GROUP_CHAT_TRIGGER | 机器人群聊触发器，空则@触发，否则：trigger 或 @bot trigger 触发 | NO | "" | 
 | responseQuote | RESPONSE_QUOTE | 群聊中回复时是否引用触发的消息 | NO | false | 
+| checkOnlineTrigger | CHECK_ONLINE_TRIGGER | 向发送此trigger的联系人定时反馈执行指令的结果 | NO | \_\_check\_\_ |
+| checkOnlineCommand | CHECK_ONLINE_COMMAND | 定时执行的指令 | NO | ping |
+| checkOnlineInterval | CHECK_ONLINE_INTERVAL | 定时间隔 | NO | 60 * 60 * 1000 |
 
 ### lss233/chatgpt-mirai-qq-bot 项目配置说明
 本项目与lss233项目部署在同一服务器时：

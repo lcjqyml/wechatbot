@@ -29,6 +29,9 @@ else {
     privateChatTrigger: process.env.PRIVATE_CHAT_TRIGGER,
     groupChatTrigger: process.env.GROUP_CHAT_TRIGGER,
     responseQuote: process.env.RESPONSE_QUOTE,
+    checkOnlineTrigger: process.env.CHECK_ONLINE_TRIGGER,
+    checkOnlineCommand: process.env.CHECK_ONLINE_COMMAND,
+    checkOnlineInterval: process.env.CHECK_ONLINE_INTERVAL,
   };
 }
 
@@ -45,7 +48,10 @@ export const Config: IConfig = {
   autoAcceptRoomInvite: configFile.autoAcceptRoomInvite == "true",
   privateChatTrigger: configFile.privateChatTrigger || "",
   groupChatTrigger:  configFile.groupChatTrigger || "",
-  responseQuote: configFile.responseQuote == "true"
+  responseQuote: configFile.responseQuote == "true",
+  checkOnlineTrigger: configFile.checkOnlineTrigger || "__check__",
+  checkOnlineCommand: configFile.checkOnlineCommand || "ping",
+  checkOnlineInterval: configFile.checkOnlineInterval || 60 * 60 * 1000,
 };
 
 Logger.log("Config ->")
